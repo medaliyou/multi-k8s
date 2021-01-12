@@ -13,7 +13,7 @@ before_install:
   #- sudo az aks list
   - kubectl get services
   - kubectl get deployments 
-  - echo $DOCKER_PASSWORD | docker login -u "$DOCKER_USERNAME" --pasword-stdin
+  - echo $DOCKER_PASSWORD | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker build -t medaliyou/react-test -f ./client/Dockerfile.dev ./client
 script:
   - docker run -e CI=true medaliyou/react-test npm test -- --coverage
