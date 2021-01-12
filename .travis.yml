@@ -1,0 +1,25 @@
+sudo: required
+services:
+  - docker
+env:
+  global:
+    - SHA=$(git rev-parse HEAD)
+    - AZURE_CORE_DISABLE_CONFIRM_PROMPT=1
+before_install:
+  - openssl aes-256-cbc -K $encrypted_9f3b5599b056_key -iv $encrypted_9f3b5599b056_iv -in service-account.json.enc -out service-account.json -d
+  - curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+  - az aks install-cli
+  - mkidr -pv $HOME/.kube && cp service-account.json $HOME/.kube/config
+  - az aks list
+  - echo $DOCKER_PASSWORD | docker login -u "$DOCKER_USERNAME" --pasword-stdin
+  - docker build -t medaliyou/react-test -f ./client/Dockerfile.dev ./client
+    
+script:
+  - docker run -e CI=true medaliyou/react-test npm test -- --coverage
+
+deploy:
+  provider: script
+  script: bash ./deploy.sh
+  on:
+    branch: master
+ 
