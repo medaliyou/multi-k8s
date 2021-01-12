@@ -10,7 +10,7 @@ before_install:
   - curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
   - sudo az aks install-cli
   - mkdir -pv $HOME/.kube && cp service-account.json $HOME/.kube/config
-  - az aks list
+  - sudo az aks list
   - echo $DOCKER_PASSWORD | docker login -u "$DOCKER_USERNAME" --pasword-stdin
   - docker build -t medaliyou/react-test -f ./client/Dockerfile.dev ./client
     
