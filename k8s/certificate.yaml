@@ -6,7 +6,7 @@ spec:
   secretName: ytdlmp3.tools
   issuerRef: 
     name: letsencrypt-prod
-    kind: Issuer
+    kind: ClusterIssuer
   commonName: ytdlmp3.tools
   dnsNames:
     - ytdlmp3.tools
