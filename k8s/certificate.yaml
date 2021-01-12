@@ -1,0 +1,21 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: ytdlmp3.tools-tls
+spec:
+  secretName: ytdlmp3.tools
+  issuerRef: 
+    name: letsencrypt-prod
+    kind: Issuer
+  commonName: ytdlmp3.tools
+  dnsNames:
+    - ytdlmp3.tools
+    - www.ytdlmp3.tools
+  acme:
+    config:
+      - http01:
+          ingress: 
+            class: nginx
+          domains:
+            - ytdlmp3.tools
+            - www.ytdlmp3.tools
